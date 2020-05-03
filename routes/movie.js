@@ -57,6 +57,7 @@ router.get('/:movie_id',(req,res)=>{
 });
 
 // api/movies POST movie data to mongodb with Movie model body
+// Also there is a easy way like : const movie = new Movie(req.body); it is equal to below codes.
 router.post("/",(req,res,next)=>{
     const {title,category,country,year,imdbScore} = req.body ;
 
