@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/Users");
 const bcrypt = require('bcryptjs'); // Password hashing
+const jwt = require('jsonwebtoken');
 
 // users/ GET all user information 
 router.get('/', (req, res)=> {
@@ -31,6 +32,49 @@ router.post('/register', (req,res)=>{
   }).catch((err)=>{
     console.log("Hashing ERROR");
   });
+});
+
+// users/authenticate POST user with its name & password and JWT creates and compare of user info's
+router.post('/authenticate', (req,res)=>{
+  const {username , password} = req.body;
+
+  User.findOne({
+    username
+  },(err, user)=>{
+    if(err){
+      throw err;
+    }
+
+    if(!user){
+      res.json({
+        status: 404,
+        message: "User is not found"
+      });
+    }
+    else{
+      bcrypt.compare(password,user.password).then((result)=>{
+        if(result==false){
+          res.json({
+            status: 404,
+            message: "Password is wrong"
+          });
+        }else{
+          const payload = {
+            username: username,
+          };
+          const token = jwt.sign(payload, req.app.get('api_secret_key'), {
+            expiresIn: 30
+          }
+          );
+          res.json({
+            status: true,
+            token
+          });
+        }
+      })
+    };
+  }
+  );
 });
 
 module.exports = router;

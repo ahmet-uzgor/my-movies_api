@@ -9,6 +9,11 @@ const usersRouter = require('./routes/users');
 const movieRouter = require('./routes/movie');
 const directorRouter = require('./routes/director');
 
+// config with secret key
+const app = express();
+const config = require('./config');
+app.set('api_secret_key',config.api_secret_key);
+
 //Mongodb Connection creation
 const uri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-hicre.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri,{useNewUrlParser: true})
@@ -20,8 +25,6 @@ mongoose.connect(uri,{useNewUrlParser: true})
 });
 
 // MongoDb settings finished.
-
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
