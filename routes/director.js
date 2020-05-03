@@ -83,4 +83,14 @@ router.put('/:director_id',(req,res)=>{
     });
 });
 
+// api/directors/:director_id DELETE a director with specified id,
+router.delete('/:director_id', (req,res)=>{
+    const promise = Director.findByIdAndDelete(req.params.director_id);
+    promise.then((director)=>{
+        res.json({status:1 , deletedDirector: director.name});
+    }).catch((err)=>{
+        res.json({status : 404});
+    });
+})
+
 module.exports = router;
