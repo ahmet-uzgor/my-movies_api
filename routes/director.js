@@ -13,4 +13,31 @@ router.post('/', (req,res,next)=>{
     });
 });
 
+// api/directors GET . it lists all directors
+router.get('/',(req,res)=>{
+    const promise = Director.aggregate([
+    {
+        $lookup: {
+            from: 'movies',
+            localField: '_id',
+            foreignField: 'director_id',
+            as: 'movies'
+        }
+    },
+    {
+        $unwind:{
+            path: '$movies',
+            preserveNullAndEmptyArrays: true
+        }
+    }
+]);
+
+
+    promise.then((director)=>{
+        res.json(director);
+    }).catch((err)=>{
+        res.json({status: 404});
+    });
+});
+
 module.exports = router;
