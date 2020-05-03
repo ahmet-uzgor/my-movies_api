@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/Users");
+const bcrypt = require('bcryptjs'); // Password hashing
 
-/* GET users listing. */
+// users/ GET all user information 
 router.get('/', (req, res)=> {
   const promise = User.find({});
   promise.then((users)=>{
@@ -12,14 +13,24 @@ router.get('/', (req, res)=> {
   });
 });
 
+// users/register POST. it creates a new user with specifed username & password
 router.post('/register', (req,res)=>{
-  const newUser = new User(req.body);
-  const promise = newUser.save();
-  promise.then((user)=>{
-    res.json({status: 1 , createdUser: user.username});
-  }).catch((err=>{
-    res.json({status: 404});
-  }));
+  const {username , password} = req.body;
+  bcrypt.hash(password,10).then((hash)=>{
+    const userCreate = new User({
+      username: username,
+      password: hash
+    });
+    
+    const promise = userCreate.save();
+    promise.then((user)=>{
+      res.json({status: 1 , createdUser: user.username});
+    }).catch((err)=>{
+      res.json(err);
+    });
+  }).catch((err)=>{
+    console.log("Hashing ERROR");
+  });
 });
 
 module.exports = router;
