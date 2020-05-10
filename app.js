@@ -14,6 +14,9 @@ const app = express();
 const config = require('./config');
 app.set('api_secret_key',config.api_secret_key);
 
+// Middleware Setup
+const verifyToken = require('./middleware-jwt/verify-token');
+
 //Mongodb Connection creation
 const uri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-hicre.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri,{useNewUrlParser: true})
@@ -37,6 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api',verifyToken);
 app.use('/users', usersRouter);
 app.use('/api/movies',movieRouter);
 app.use('/api/directors',directorRouter);

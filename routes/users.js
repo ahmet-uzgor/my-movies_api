@@ -63,7 +63,7 @@ router.post('/authenticate', (req,res)=>{
             username: username,
           };
           const token = jwt.sign(payload, req.app.get('api_secret_key'), {
-            expiresIn: 30
+            expiresIn: 720
           }
           );
           res.json({
