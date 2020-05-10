@@ -29,7 +29,7 @@ First writed api with node.js also it used mongod atlas as DB and heroku , travi
 
 | Route | HTTP Verb	 | POST body	 | Description	 |
 | --- | --- | --- | --- |
-| /register | `POST` | { username: 'foo', password:'1234' } | Create a new user. |
-| /authenticate | `POST` | { username: 'foo', password:'1234' } | Generate a token. |
+| users/register | `POST` | { username: 'foo', password:'1234' } | Create a new user. |
+| users/authenticate | `POST` | { username: 'foo', password:'1234' } | Generate a token. |
 
 
