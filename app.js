@@ -19,7 +19,7 @@ const verifyToken = require('./middleware-jwt/verify-token');
 
 //Mongodb Connection creation
 const uri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-hicre.mongodb.net/test?retryWrites=true&w=majority";
-mongoose.connect(uri,{useNewUrlParser: true})
+mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true})
 .then(()=>{
   console.log('Mongodb connection is completed');
 })
