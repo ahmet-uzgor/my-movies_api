@@ -65,7 +65,7 @@ router.get('/between/:start_year/:end_year', (req,res)=>{
 router.get('/:movie_id',(req,res)=>{
     const promise = Movie.findById(req.params.movie_id);
     promise.then((movie)=>{
-        res.send(movie.title);
+        res.json(movie);
     }).catch((err)=>{
         res.json({status: err });
     });
