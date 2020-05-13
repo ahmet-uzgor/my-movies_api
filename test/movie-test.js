@@ -59,4 +59,20 @@ describe('tests /api/movies', ()=>{
                 });
         });
     });
+
+    describe('/api/movies/:movie_id  get movie with id',()=>{
+        it('',(done)=>{
+            const movie_id = '5ead4834ed3a70208c029308';
+            chai.request(server)
+                .get('/api/movies/'+ movie_id)
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title');
+                    done();
+                });
+        });
+    });
+
 });
