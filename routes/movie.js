@@ -90,7 +90,7 @@ router.post("/",(req,res,next)=>{
         }
         else{
             //res.send("Succesfully saving completed");
-            res.json({status: 1});
+            res.json(data);
         };
     });
 
