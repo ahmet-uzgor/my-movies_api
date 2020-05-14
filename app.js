@@ -18,13 +18,22 @@ app.set('api_secret_key',config.api_secret_key);
 const verifyToken = require('./middleware-jwt/verify-token');
 
 //Mongodb Connection creation
-const uri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-hicre.mongodb.net/test?retryWrites=true&w=majority";
-mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true})
+
+const gcpUri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-zdtir.gcp.mongodb.net/test?retryWrites=true&w=majority"; //google cloud mongodb server
+const awsUri = "mongodb+srv://ahmet-uzgor:Fetih2020*>@cluster0-hicre.mongodb.net/test?retryWrites=true&w=majority"; // amazon cloud mongodb server
+mongoose.connect(awsUri,{useNewUrlParser: true,useUnifiedTopology: true})
 .then(()=>{
   console.log('Mongodb connection is completed');
 })
 .catch((err)=>{
-  console.log("MongoDB Connection Error");
+  mongoose.connect(gcpUri,{useNewUrlParser: true,useUnifiedTopology: true})
+  .then(()=>{
+    console.log("Google cloud server connected due to AWS connection error");
+  })
+  .catch((err)=>{
+    console.log("Both server connection is failed");
+    console.log(err)
+  });
 });
 
 // MongoDb settings finished.
