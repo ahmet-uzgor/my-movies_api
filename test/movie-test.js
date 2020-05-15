@@ -104,4 +104,19 @@ describe('tests /api/movies', ()=>{
                 });
         });
     });
+
+    describe('/DELETE method tests api/movies/:movie_id',()=>{
+        it('deletes movie by given id on api/movies/:movie_id',(done)=>{
+            chai.request(server)
+            .delete('/api/movies/'+ movie_id)
+            .set('x-access-token',token)
+            .end((err,res)=>{
+                res.should.have.status(200);
+                res.should.be.a('object');
+                //res.should.have.property("deletedMovie")
+                done();
+            });
+
+        });
+    });
 });
