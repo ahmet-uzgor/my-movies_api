@@ -19,7 +19,7 @@ const verifyToken = require('./middleware-jwt/verify-token');
 
 //Mongodb Connection creation
 
-const gcpUri = "mongodb+srv://ahmet-uzgor:Fetih2020*@cluster0-zdtir.gcp.mongodb.net/test?retryWrites=true&w=majority"; //google cloud mongodb server
+const gcpUri = "mongodb+srv://ahmet-uzgor-test:ahmet123@cluster0-zdtir.gcp.mongodb.net/test?retryWrites=true&w=majority"; //google cloud mongodb server
 mongoose.connect(gcpUri,{useNewUrlParser: true,useUnifiedTopology: true})
 .then(()=>{
   console.log('Mongodb connection is completed');
