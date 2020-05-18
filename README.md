@@ -1,3 +1,5 @@
+Integration-Results:![logo]:https://api.travis-ci.com/ahmet-uzgor/my-movies_api.svg?
+
 This folder includes example node.js restful api which is called as My-Movie-Api . CREATED by AHMET UZGOR
 
 First writed api with node.js also it used mongod atlas as DB and heroku , travis cı is used for deployment and continous integration.
