@@ -3,7 +3,10 @@ const router = express.Router();
 const User = require("../models/Users");
 const bcrypt = require('bcryptjs'); // Password hashing
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
+//urlencodedParser
+const urlencodedParser = express().use(bodyParser.urlencoded({extended: false}))
 // users/ GET all user information 
 router.get('/', (req, res)=> {
   const promise = User.find({});
@@ -35,8 +38,11 @@ router.post('/register', (req,res)=>{
 });
 
 // users/authenticate POST user with its name & password and JWT creates and compare of user info's
-router.post('/authenticate', (req,res)=>{
-  const {username , password} = req.body;
+router.post('/authenticate', urlencodedParser ,(req,res)=>{
+  console.log(req.body.password);
+  const username = req.body.username;
+  const password = req.body.password;
+  const api_secret_key =  "Basic secret key"
 
   User.findOne({
     username
@@ -62,14 +68,15 @@ router.post('/authenticate', (req,res)=>{
           const payload = {
             username: username,
           };
-          const token = jwt.sign(payload, req.app.get('api_secret_key'), {
+          const token = jwt.sign(payload, api_secret_key, {
             expiresIn: 720
           }
-          );
+          );/*
           res.json({
             status: true,
             token
-          });
+          });*/
+          res.redirect('http://localhost:3000/api/movies?x-access-token='+token);
         }
       })
     };
