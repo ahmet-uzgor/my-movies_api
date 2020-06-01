@@ -9,16 +9,12 @@ const bodyParser = require('body-parser');
 const urlencodedParser = express().use(bodyParser.urlencoded({extended: false}))
 // users/ GET all user information 
 router.get('/', (req, res)=> {
-  const promise = User.find({});
-  promise.then((users)=>{
-    res.json(users);
-  }).catch((err)=>{
-    res.json({status: 404});
-  });
+  res.render('users',{message: "Please register firstly"});
 });
 
 // users/register POST. it creates a new user with specifed username & password
 router.post('/register', (req,res)=>{
+  console.log(req.body);
   const {username , password} = req.body;
   bcrypt.hash(password,10).then((hash)=>{
     const userCreate = new User({
@@ -28,7 +24,8 @@ router.post('/register', (req,res)=>{
     
     const promise = userCreate.save();
     promise.then((user)=>{
-      res.json({status: 1 , createdUser: user.username});
+      //res.json({status: 1 , createdUser: user.username});
+      res.redirect("http://localhost:3000")
     }).catch((err)=>{
       res.json(err);
     });
